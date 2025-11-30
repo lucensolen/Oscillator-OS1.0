@@ -35,6 +35,11 @@ function todayKey(ts) {
   ).padStart(2, "0")}`;
 }
 
+function toggleInfo(id) {
+  const box = document.getElementById(id);
+  box.classList.toggle("hidden");
+}
+
 // Initial data
 let stateLog = loadJSON(STORAGE_KEY_STATE_LOG, []);
 let fieldLog = loadJSON(STORAGE_KEY_FIELD_LOG, { ground: [], flight: [] });
