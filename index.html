@@ -37,114 +37,95 @@
     <main class="osc-main">
       <!-- Left: Core Engine -->
       <section class="osc-panel core-panel">
-        <div class="panel-header">
-          <h2>Core Engine</h2>
-          <p>Declare your pole for the next cycle.</p>
+  <div class="panel-header">
+    <h2>
+      FEEL STATE (Internal Engine)
+      <span class="info-toggle" onclick="toggleInfo('feel-info')">?</span>
+    </h2>
+    <p>Log where you are inside — not what you did.</p>
+    <div id="feel-info" class="info-box hidden">
+      <strong>FEEL = Internal State.</strong><br><br>
+      Use this when your inner position changes:
+      rising into Flight, dropping into Ground, leveling off, gaining charge,
+      feeling tension, clarity, fatigue, or a “snap.”<br><br>
+      No actions here. Only your internal weather.
+    </div>
+  </div>
+
+  <div class="core-layout">
+    <div class="dial-column">
+      <div class="dial-label dial-label-top">FLIGHT</div>
+      <div class="dial-wrapper">
+        <input type="range" id="osc-pole-slider" min="-100" max="100" step="10" value="0" class="vertical-slider"/>
+        <div class="dial-center-mark"></div>
+      </div>
+      <div class="dial-label dial-label-bottom">GROUND</div>
+    </div>
+
+    <div class="core-controls">
+      <div class="state-row">
+        <div class="state-pill" id="osc-current-pole-pill">No state set</div>
+        <div class="state-intensity">
+          <span>Intensity:</span>
+          <span id="osc-intensity-label">0%</span>
         </div>
+      </div>
 
-        <div class="core-layout">
-          <div class="dial-column">
-            <div class="dial-label dial-label-top">FLIGHT</div>
-            <div class="dial-wrapper">
-              <input
-                type="range"
-                id="osc-pole-slider"
-                min="-100"
-                max="100"
-                step="10"
-                value="0"
-                class="vertical-slider"
-              />
-              <div class="dial-center-mark"></div>
-            </div>
-            <div class="dial-label dial-label-bottom">GROUND</div>
-          </div>
+      <label class="field-label" for="osc-energy-rating">
+        How charged do you feel?
+      </label>
+      <div class="energy-row">
+        <input type="range" id="osc-energy-rating" min="1" max="5" step="1" value="3"/>
+        <div id="osc-energy-text" class="energy-text">Neutral</div>
+      </div>
 
-          <div class="core-controls">
-            <div class="state-row">
-              <div class="state-pill" id="osc-current-pole-pill">No pole set</div>
-              <div class="state-intensity">
-                <span>Intensity:</span>
-                <span id="osc-intensity-label">0%</span>
-              </div>
-            </div>
+      <label class="field-label" for="osc-note">
+        Optional short note about your internal state
+      </label>
+      <textarea id="osc-note" rows="2" placeholder="Example: Rising into Flight, mentally clear but physically tired."></textarea>
 
-            <label class="field-label" for="osc-energy-rating">
-              How charged do you feel right now?
-            </label>
-            <div class="energy-row">
-              <input
-                type="range"
-                id="osc-energy-rating"
-                min="1"
-                max="5"
-                step="1"
-                value="3"
-              />
-              <div id="osc-energy-text" class="energy-text">Neutral</div>
-            </div>
+      <button id="osc-set-state-btn" class="primary-btn">Log Current State</button>
 
-            <label class="field-label" for="osc-note">
-              Short note for this state (optional)
-            </label>
-            <textarea
-              id="osc-note"
-              rows="2"
-              placeholder="Example: Cold, muddy morning but clear-headed. Ready to build later."
-            ></textarea>
-
-            <button id="osc-set-state-btn" class="primary-btn">
-              Log Current State
-            </button>
-
-            <p class="hint">
-              Each time you log a state, the engine learns your rhythm and updates
-              frequency, momentum, and pattern.
-            </p>
-          </div>
-        </div>
+    </div>
+  </div>
       </section>
 
       <!-- Right: Field Log -->
       <section class="osc-panel field-panel">
-        <div class="panel-header">
-          <h2>Field Log</h2>
-          <p>One real move on each side is enough to move the engine.</p>
-        </div>
+      <section class="osc-panel field-panel">
+  <div class="panel-header">
+    <h2>
+      ACTION LOG (External Moves)
+      <span class="info-toggle" onclick="toggleInfo('action-info')">?</span>
+    </h2>
+    <p>Record what you actually did in the real world.</p>
+    <div id="action-info" class="info-box hidden">
+      <strong>ACTION = External Movement.</strong><br><br>
+      Use this to log physical or creative actions:
+      hauling water, fixing wiring, designing UI, planning, writing, building.<br><br>
+      No feelings here. Only actual movement — the fuel for your oscillation engine.
+    </div>
+  </div>
 
-        <div class="field-layout">
-          <div class="field-column">
-            <h3>Ground Actions</h3>
-            <p class="column-sub">
-              Body, mud, diesel, chores, survival, friction.
-            </p>
-            <textarea
-              id="osc-ground-input"
-              rows="3"
-              placeholder="Example: Hauled water in the cold, fixed wiring, checked animals."
-            ></textarea>
-            <button id="osc-add-ground-btn" class="ghost-btn">
-              Log Ground Action
-            </button>
-            <ul id="osc-ground-list" class="entry-list"></ul>
-          </div>
+  <div class="field-layout">
+    <div class="field-column">
+      <h3>GROUND Actions</h3>
+      <p class="column-sub">Body, reality, survival, friction.</p>
+      <textarea id="osc-ground-input" rows="3"
+        placeholder="Example: Hauled water in cold, fixed caravan wiring."></textarea>
+      <button id="osc-add-ground-btn" class="ghost-btn">Log Ground Action</button>
+      <ul id="osc-ground-list" class="entry-list"></ul>
+    </div>
 
-          <div class="field-column">
-            <h3>Flight Actions</h3>
-            <p class="column-sub">
-              Creation, precision, finesse, brand, design.
-            </p>
-            <textarea
-              id="osc-flight-input"
-              rows="3"
-              placeholder="Example: Refined OSC UI idea, wrote copy, sketched build structure."
-            ></textarea>
-            <button id="osc-add-flight-btn" class="ghost-btn">
-              Log Flight Action
-            </button>
-            <ul id="osc-flight-list" class="entry-list"></ul>
-          </div>
-        </div>
+    <div class="field-column">
+      <h3>FLIGHT Actions</h3>
+      <p class="column-sub">Creation, precision, refinement, design.</p>
+      <textarea id="osc-flight-input" rows="3"
+        placeholder="Example: Refined OS UI, sketched build, planned narrative."></textarea>
+      <button id="osc-add-flight-btn" class="ghost-btn">Log Flight Action</button>
+      <ul id="osc-flight-list" class="entry-list"></ul>
+    </div>
+  </div>
       </section>
 
       <!-- Bottom: Pattern & History -->
