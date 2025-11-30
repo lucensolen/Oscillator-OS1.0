@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Oscillation OS v1.0</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="osc-app">
+    <header class="osc-header">
+      <div class="osc-title-block">
+        <h1>Oscillation OS <span class="osc-badge">v1.0</span></h1>
+        <p class="osc-subtitle">
+          Daily engine for <span class="accent">Ground ⇅ Flight</span>.
+        </p>
+      </div>
+      <div class="osc-meta">
+        <div class="meta-item">
+          <span class="meta-label">Today</span>
+          <span id="osc-date" class="meta-value"></span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Momentum</span>
+          <span id="osc-momentum-phase" class="meta-value meta-pill">—</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Frequency</span>
+          <span id="osc-frequency-label" class="meta-value meta-pill">—</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="osc-main">
+      <!-- Left: Core Engine -->
+      <section class="osc-panel core-panel">
+        <div class="panel-header">
+          <h2>Core Engine</h2>
+          <p>Declare your pole for the next cycle.</p>
+        </div>
+
+        <div class="core-layout">
+          <div class="dial-column">
+            <div class="dial-label dial-label-top">FLIGHT</div>
+            <div class="dial-wrapper">
+              <input
+                type="range"
+                id="osc-pole-slider"
+                min="-100"
+                max="100"
+                step="10"
+                value="0"
+                class="vertical-slider"
+              />
+              <div class="dial-center-mark"></div>
+            </div>
+            <div class="dial-label dial-label-bottom">GROUND</div>
+          </div>
+
+          <div class="core-controls">
+            <div class="state-row">
+              <div class="state-pill" id="osc-current-pole-pill">No pole set</div>
+              <div class="state-intensity">
+                <span>Intensity:</span>
+                <span id="osc-intensity-label">0%</span>
+              </div>
+            </div>
+
+            <label class="field-label" for="osc-energy-rating">
+              How charged do you feel right now?
+            </label>
+            <div class="energy-row">
+              <input
+                type="range"
+                id="osc-energy-rating"
+                min="1"
+                max="5"
+                step="1"
+                value="3"
+              />
+              <div id="osc-energy-text" class="energy-text">Neutral</div>
+            </div>
+
+            <label class="field-label" for="osc-note">
+              Short note for this state (optional)
+            </label>
+            <textarea
+              id="osc-note"
+              rows="2"
+              placeholder="Example: Cold, muddy morning but clear-headed. Ready to build later."
+            ></textarea>
+
+            <button id="osc-set-state-btn" class="primary-btn">
+              Log Current State
+            </button>
+
+            <p class="hint">
+              Each time you log a state, the engine learns your rhythm and updates
+              frequency, momentum, and pattern.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right: Field Log -->
+      <section class="osc-panel field-panel">
+        <div class="panel-header">
+          <h2>Field Log</h2>
+          <p>One real move on each side is enough to move the engine.</p>
+        </div>
+
+        <div class="field-layout">
+          <div class="field-column">
+            <h3>Ground Actions</h3>
+            <p class="column-sub">
+              Body, mud, diesel, chores, survival, friction.
+            </p>
+            <textarea
+              id="osc-ground-input"
+              rows="3"
+              placeholder="Example: Hauled water in the cold, fixed wiring, checked animals."
+            ></textarea>
+            <button id="osc-add-ground-btn" class="ghost-btn">
+              Log Ground Action
+            </button>
+            <ul id="osc-ground-list" class="entry-list"></ul>
+          </div>
+
+          <div class="field-column">
+            <h3>Flight Actions</h3>
+            <p class="column-sub">
+              Creation, precision, finesse, brand, design.
+            </p>
+            <textarea
+              id="osc-flight-input"
+              rows="3"
+              placeholder="Example: Refined OSC UI idea, wrote copy, sketched build structure."
+            ></textarea>
+            <button id="osc-add-flight-btn" class="ghost-btn">
+              Log Flight Action
+            </button>
+            <ul id="osc-flight-list" class="entry-list"></ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bottom: Pattern & History -->
+      <section class="osc-panel history-panel">
+        <div class="panel-header">
+          <h2>Pattern & History</h2>
+          <p>See how your engine has actually been moving.</p>
+        </div>
+
+        <div class="history-layout">
+          <div class="history-column">
+            <h3>Today’s Cycle</h3>
+            <ul id="osc-today-log" class="state-log-list"></ul>
+          </div>
+
+          <div class="history-column">
+            <h3>Last 7 Days</h3>
+            <div id="osc-history-summary" class="history-summary">
+              <p class="hint">
+                Log a few states and actions — this panel will start drawing your
+                Ground ⇅ Flight pattern.
+              </p>
+            </div>
+          </div>
+
+          <div class="history-column">
+            <h3>Engine Reflection</h3>
+            <div id="osc-engine-reflection" class="reflection-box">
+              Log at least 3 states to unlock pattern reflections.
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="osc-footer">
+      <span>Oscillation OS v1.0 • Local-first • Future Lucen-compatible</span>
+      <button id="osc-reset-btn" class="danger-link">
+        Reset all data
+      </button>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
