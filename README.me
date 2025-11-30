@@ -1,0 +1,49 @@
+# Oscillation OS v1.0
+
+A small, self-contained daily cockpit for running your **Ground ⇅ Flight** engine.
+
+- No accounts
+- No backend
+- All data stored locally in `localStorage`
+- Designed to be Lucen-compatible later as an integration layer
+
+## Files
+
+- `index.html` – main layout and structure
+- `style.css` – dark glassy UI styling
+- `app.js` – state engine, logging, pattern computation
+- `README.md` – this file
+
+## How to use
+
+1. Open `index.html` in a browser.
+2. Choose your pole with the vertical slider:
+   - Up = **FLIGHT** (creation, precision, builds)
+   - Down = **GROUND** (body, mud, diesel, chores)
+3. Rate your current energy and optionally add a short note.
+4. Click **"Log Current State"**.
+5. Add **Ground** and **Flight** actions to the Field Log as your day unfolds.
+6. Watch:
+   - Today’s Cycle
+   - Last 7 Days Ground vs Flight
+   - Engine Reflection
+   - Momentum & Frequency labels at the top
+
+## Local storage keys
+
+- `oscillation.os.stateLog`
+- `oscillation.os.fieldLog`
+
+These can later be bridged into the Lucen / Nucleos memory system.
+
+## Hosting
+
+You can host this as static files on:
+
+- GitHub Pages
+- Cloudflare Pages
+- Netlify
+- Render static site
+- Replit web project
+
+No configuration needed beyond serving the files.
