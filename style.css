@@ -579,6 +579,15 @@ textarea::placeholder {
   opacity: 0.9;
 }
 
+.export-panel {
+  margin-top: 40px;
+}
+
+.export-panel .primary-btn {
+  width: 100%;
+  margin-top: 10px;
+}
+
 .info-box {
   margin-top: 8px;
   padding: 8px 10px;
