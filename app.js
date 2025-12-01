@@ -40,6 +40,37 @@ function toggleInfo(id) {
   box.classList.toggle("hidden");
 }
 
+function exportOscillationLogs() {
+  // Collect everything from localStorage
+  const feelStates = JSON.parse(localStorage.getItem("osc.states") || "[]");
+  const groundActions = JSON.parse(localStorage.getItem("osc.ground") || "[]");
+  const flightActions = JSON.parse(localStorage.getItem("osc.flight") || "[]");
+
+  // Bundle into one export object
+  const exportData = {
+    exported_at: new Date().toISOString(),
+    feel_states: feelStates,
+    ground_actions: groundActions,
+    flight_actions: flightActions
+  };
+
+  // Convert to JSON
+  const jsonString = JSON.stringify(exportData, null, 2);
+
+  // Create downloadable file
+  const blob = new Blob([jsonString], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+
+  // Create temporary link
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "oscillation_logs.json";
+  link.click();
+
+  // Clean up
+  URL.revokeObjectURL(url);
+}
+
 // Initial data
 let stateLog = loadJSON(STORAGE_KEY_STATE_LOG, []);
 let fieldLog = loadJSON(STORAGE_KEY_FIELD_LOG, { ground: [], flight: [] });
