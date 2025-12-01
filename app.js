@@ -42,23 +42,20 @@ function toggleInfo(id) {
 
 function exportOscillationLogs() {
   try {
-    // Pull stored logs safely
-    const feelStates = JSON.parse(localStorage.getItem("osc.states") || "[]");
-    const groundActions = JSON.parse(localStorage.getItem("osc.ground") || "[]");
-    const flightActions = JSON.parse(localStorage.getItem("osc.flight") || "[]");
+    const stateLog = loadJSON("oscillation.os.stateLog", []);
+    const fieldLog = loadJSON("oscillation.os.fieldLog", { ground: [], flight: [] });
 
     const exportData = {
       exported_at: new Date().toISOString(),
-      feel_states: feelStates,
-      ground_actions: groundActions,
-      flight_actions: flightActions
+      feel_states: stateLog,
+      ground_actions: fieldLog.ground,
+      flight_actions: fieldLog.flight
     };
 
     const json = JSON.stringify(exportData, null, 2);
     const blob = new Blob([json], { type: "application/json" });
     const url = (window.URL || window.webkitURL).createObjectURL(blob);
 
-    // Force download
     const link = document.createElement("a");
     link.href = url;
     link.download = "oscillation_logs.json";
@@ -74,6 +71,7 @@ function exportOscillationLogs() {
     alert("Something went wrong exporting your logs.");
   }
 }
+
 
 // Initial data
 let stateLog = loadJSON(STORAGE_KEY_STATE_LOG, []);
