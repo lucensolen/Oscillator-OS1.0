@@ -41,34 +41,38 @@ function toggleInfo(id) {
 }
 
 function exportOscillationLogs() {
-  // Collect everything from localStorage
-  const feelStates = JSON.parse(localStorage.getItem("osc.states") || "[]");
-  const groundActions = JSON.parse(localStorage.getItem("osc.ground") || "[]");
-  const flightActions = JSON.parse(localStorage.getItem("osc.flight") || "[]");
+  try {
+    // Pull stored logs safely
+    const feelStates = JSON.parse(localStorage.getItem("osc.states") || "[]");
+    const groundActions = JSON.parse(localStorage.getItem("osc.ground") || "[]");
+    const flightActions = JSON.parse(localStorage.getItem("osc.flight") || "[]");
 
-  // Bundle into one export object
-  const exportData = {
-    exported_at: new Date().toISOString(),
-    feel_states: feelStates,
-    ground_actions: groundActions,
-    flight_actions: flightActions
-  };
+    const exportData = {
+      exported_at: new Date().toISOString(),
+      feel_states: feelStates,
+      ground_actions: groundActions,
+      flight_actions: flightActions
+    };
 
-  // Convert to JSON
-  const jsonString = JSON.stringify(exportData, null, 2);
+    const json = JSON.stringify(exportData, null, 2);
+    const blob = new Blob([json], { type: "application/json" });
+    const url = (window.URL || window.webkitURL).createObjectURL(blob);
 
-  // Create downloadable file
-  const blob = new Blob([jsonString], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
+    // Force download
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "oscillation_logs.json";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 
-  // Create temporary link
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = "oscillation_logs.json";
-  link.click();
+    (window.URL || window.webkitURL).revokeObjectURL(url);
 
-  // Clean up
-  URL.revokeObjectURL(url);
+    console.log("Logs exported successfully.");
+  } catch (err) {
+    console.error("Export error:", err);
+    alert("Something went wrong exporting your logs.");
+  }
 }
 
 // Initial data
